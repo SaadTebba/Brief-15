@@ -1,0 +1,102 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ================================= Header (100vh) ================================= */
+
+body {
+    background-color: #EEF1F3;
+}
+
+#image {
+    background-image: url("bluebg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+header div .btn {
+    width: 123px;
+    height: 48px;
+    border-radius: 50px;
+}
+
+.signin {
+    color: #0091D9;
+    border: #0091D9 2px solid;
+}
+
+.signup {
+    background-color: #0091D9;
+}
+
+.h1 {
+    color: #0089CD;
+}
+
+/* ================================= Scroll down arrow ================================= */
+
+.down-arrow {
+    position: absolute;
+    top: calc(100vh - 60px);
+    left: calc(50% - 14px);
+    width: 0;
+    height: 30px;
+    border: 2px solid;
+    border-radius: 2px;
+    animation: jumpInfinite 1.5s infinite;
+}
+
+.down-arrow:after {
+    content: " ";
+    position: absolute;
+    top: 12px;
+    left: -10px;
+    width: 16px;
+    height: 16px;
+    border-bottom: 4px solid;
+    border-right: 4px solid;
+    border-radius: 4px;
+    transform: rotateZ(45deg);
+}
+
+@keyframes jumpInfinite {
+    0% {
+        margin-top: 0;
+    }
+
+    50% {
+        margin-top: 20px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+
+/* ================================= Cards ================================= */
+
+.detailsButton {
+    background-color: #0091D9;
+    color: white;
+    width: 100%;
+}
+
+.detailsButton:hover {
+    border: #0089CD 1px solid;
+}
+
+/* ================================= Footer ================================= */
+
+.footertext {
+    font-weight: 600;
+}
+
+.icons {
+    color: #0089CD;
+    font-size: 24px;
+    margin-right: 10px;
+}
