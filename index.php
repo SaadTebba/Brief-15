@@ -1,5 +1,3 @@
-<?php include 'connection.php' ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,16 +66,32 @@
 
     <div class="container p-5 text-center">
 
-        <div class="card d-inline-block m-1" style="width: 18rem;">
-            <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p class="card-text">For rent</p>
-                <p class="card-text">15$/h</p>
-                <a href="#" class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow">Details</a>
+        <?php
+        include_once('connection.php');
+        $a = 1;
+
+        $stmt = $conn->prepare("SELECT * FROM annonce");
+        $stmt->execute();
+
+        $users = $stmt->fetchAll();
+
+        foreach ($users as $user) {
+        ?>
+
+            <div class="card d-inline-block m-1" style="width: 18rem;">
+                <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $user['Title']; ?></h5>
+                    <p class="card-text"><?php echo $user['Title']; ?></p>
+                    <p class="card-text"><?php echo $user['Categorie']; ?></p>
+                    <p class="card-text"><?php echo $user['Prix']; ?></p>
+                    <a href="#" class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow">Details</a>
+                </div>
             </div>
-        </div>
+
+        <?php
+        }
+        ?>
 
     </div>
 
@@ -101,7 +115,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
