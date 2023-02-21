@@ -18,7 +18,7 @@ body {
     height: 100vh;
 }
 
-header div .btn {
+.signin, .signup {
     width: 123px;
     height: 48px;
     border-radius: 50px;
@@ -37,6 +37,13 @@ header div .btn {
     color: #0089CD;
 }
 
+.filtersearch {
+    color: #0089CD;
+}
+#search {
+    border-radius: 50px 0px 0px 50px;
+}
+
 /* ================================= Scroll down arrow ================================= */
 
 .down-arrow {
@@ -48,6 +55,7 @@ header div .btn {
     border: 2px solid;
     border-radius: 2px;
     animation: jumpInfinite 1.5s infinite;
+    color: #0089CD;
 }
 
 .down-arrow:after {
@@ -78,6 +86,17 @@ header div .btn {
 }
 
 /* ================================= Cards ================================= */
+
+.sortingSelect {
+    background-color: #0091D9;
+    color: white;
+    width: 15%;
+    margin: 20px 0px 0px 148px;
+}
+
+.sortingSelect:hover {
+    border: #0089CD solid 1px;
+}
 
 .detailsButton {
     background-color: #0091D9;
