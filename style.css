@@ -3,12 +3,17 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
 }
 
 /* ================================= Header (100vh) ================================= */
 
 body {
     background-color: #EEF1F3;
+}
+
+.searchbtn {
+    border: #0089CD solid 1px;
 }
 
 #image {
@@ -63,7 +68,7 @@ body {
     position: absolute;
     top: 12px;
     left: -10px;
-    width: 16px;
+    width: 17.5px;
     height: 16px;
     border-bottom: 4px solid;
     border-right: 4px solid;

@@ -1,7 +1,5 @@
 <?php
- 
-$conn = "";
- 
+  
 try {
     $servername = "localhost";
     $dbname = "testingnissrine";

@@ -11,13 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://kit.fontawesome.com/165265fe22.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
-    <style>
-        <?php include 'style.css' ?>
-    </style>
 
     <!-- ================================= Header (100vh) ================================= -->
 
@@ -30,21 +27,47 @@
             </div>
 
             <div class="col-6">
-                <form method="GET">
+
+                <form method="POST">
                     <div class="input-group">
                         <div class="form-outline">
-                            <input type="search" id="search" class="form-control">
+                            <input type="search" name="search" id="search" class="form-control" placeholder="Search">
                         </div>
-                        <button type="button" class="btn"><i class="fas fa-search filtersearch"></i></button>
-                        <button type="button" class="btn"><i class="fa-solid fa-filter filtersearch"></i></button>
-                    </div>
+                        <button type="submit" class="btn searchbtn border" title="Search"><i class="fas fa-search filtersearch"></i></button>
                 </form>
-            </div>
 
-            <div class="col-3 d-flex justify-content-end gap-2">
-                <button class="btn signin"><span class="h6">SIGN IN</span></button>
-                <button class="btn btn-primary signup"><span class="h6">SIGN UP</span></button>
+                <form action="POST">
+                    <select class="border" name="filter_search">
+                        <option>All</option>
+                        <option>City</option>
+                        <option>Category</option>
+                        <option>Type</option>
+                        <option>Price</option>
+                    </select>
+                    <button type="submit" class="btn filterbtn border" title="Filter"><i class="fa-solid fa-filter filtersearch"></i></button>
+                </form>
+
             </div>
+        </div>
+
+        <?php
+
+        if (isset($POST['search'])) {
+            $searchValue = $_POST['search'];
+            echo "You searched for: $searchValue";
+        };
+
+        if (isset($_POST['filter_search'])) {
+            $selectedOption = $_POST['filter_search'];
+            echo "You selected option: $selectedOption";
+        }
+
+        ?>
+
+        <div class="col-3 d-flex justify-content-end gap-2">
+            <button class="btn signin"><span class="h6">SIGN IN</span></button>
+            <button class="btn btn-primary signup"><span class="h6">SIGN UP</span></button>
+        </div>
 
         </div>
 
@@ -54,22 +77,32 @@
         <h1 class="h1 text-center container pt-5 display-1 fw-normal">Buy, rent and sell your properties easily with us!</h1>
     </div>
 
-    <div class="down-arrow"></div>
+    <div class="down-arrow" onclick="scrollDown()"></div>
 
     <!-- ================================= Cards container ================================= -->
 
-    <select class="form-select btn sortingSelect">
-        <option selected disabled>Sort by</option>
-        <option value="1">Publication date</option>
-        <option value="2">Price</option>
-    </select>
+
+    <form action="POST">
+        <select class="form-select btn sortingSelect" name="sortBy">
+            <option selected disabled>Sort by</option>
+            <option value="pubDate">Publication date</option>
+            <option value="price">Price</option>
+        </select>
+    </form>
+
+    <?php
+
+        $sort = $_POST['sortBy'];
+        echo "You have choosed to sort by " . $sort;
+
+    ?>
+
+
 
     <div class="container p-5 text-center">
 
         <?php
         include_once('connection.php');
-        $a = 1;
-
         $stmt = $conn->prepare("SELECT * FROM annonce");
         $stmt->execute();
 
@@ -80,16 +113,17 @@
 
             <div class="card d-inline-block m-1" style="width: 18rem;">
                 <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
-                <div class="card-body">
+                <div class="card-body" data-id="<?php echo $user['N_ann']; ?>">
                     <h5 class="card-title"><?php echo $user['Title']; ?></h5>
                     <p class="card-text"><?php echo $user['Title']; ?></p>
                     <p class="card-text"><?php echo $user['Categorie']; ?></p>
                     <p class="card-text"><?php echo $user['Prix']; ?></p>
-                    <a href="#" class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow">Details</a>
+                    <a class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow" onclick="details()">Details</a>
                 </div>
             </div>
 
         <?php
+            // $specifyModal = "SELECT * FROM testingnissrine WHERE"
         }
         ?>
 
@@ -105,13 +139,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><span class="fw-bold">Title:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <p><span class="fw-bold">Category:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <p><span class="fw-bold">Type:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <p><span class="fw-bold">Area:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <p><span class="fw-bold">Adress:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <p><span class="fw-bold">Price:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <p><span class="fw-bold">Description:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p><span class="fw-bold">Title:</span> <?php echo $user['Title']; ?></p>
+                    <p><span class="fw-bold">Category:</span> <?php echo $user['Categorie']; ?></p>
+                    <p><span class="fw-bold">Type:</span> <?php echo $user['Type']; ?></p>
+                    <p><span class="fw-bold">Area:</span> <?php echo $user['Title']; ?></p>
+                    <p><span class="fw-bold">Adress:</span> <?php echo $user['Adresse']; ?></p>
+                    <p><span class="fw-bold">Price:</span> <?php echo $user['Prix']; ?></p>
+                    <p><span class="fw-bold">Description:</span> <?php echo $user['Title']; ?></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -147,6 +181,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/165265fe22.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
