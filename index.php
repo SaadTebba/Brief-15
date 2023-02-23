@@ -21,19 +21,24 @@
     <?php include 'header.php' ?>
 
     <form action="POST">
-        <select class="form-select btn sortingSelect" name="sortBy" id="sortBy">
+        <select class="form-select btn sortingSelect" name="sort">
             <option selected disabled value="none">Sort by</option>
-            <option value="pubDate">Publication date</option>
-            <option value="price">Price</option>
+            <option value="Publication date">Publication date</option>
+            <option value="Price">Price</option>
         </select>
     </form>
 
     <?php
 
-    // if (isset($_POST['sortBy'])) {
-    //     $sort = $_POST['sortBy'];
-    //     echo "Selected option: $sort";
-    // }
+
+    if (isset($_POST['sort']) == 'Publication date') {
+        $sort = $_POST['sort'];
+        echo "Selected option: $sort";
+    } elseif (isset($_POST['sort']) == 'Price') {
+        echo "Selected option: $sort";
+    } elseif (isset($_POST['sort']) == 'none') {
+        echo "Selected option: $sort";
+    }
 
     ?>
 
@@ -49,16 +54,40 @@
 
             $searched_value = $_POST['search'];
 
-            $statement = $conn->prepare("SELECT * FROM annonce WHERE Title = $searched_value"); //  OR Ville = $searched_value OR Categorie = $searched_value OR `Type` = $searched_value OR Prix = $searched_value
-            $statement->execute();
-            $announces = $statement->fetchAll();
+            if (isset($_POST['filter_search']) == 'All') {
 
+                $statement = $conn->prepare("SELECT * FROM annonce WHERE Title LIKE '{$searched_value}%' OR Ville LIKE '{$searched_value}%' OR Categorie LIKE '{$searched_value}%' OR `Type` LIKE '{$searched_value}%' OR Prix LIKE '{$searched_value}%'");
+                $statement->execute();
+                $announces = $statement->fetchAll();
+            } elseif (isset($_POST['filter_search']) == 'City') {
+
+                $statement = $conn->prepare("SELECT * FROM annonce WHERE Ville LIKE '{$searched_value}%'");
+                $statement->execute();
+                $announces = $statement->fetchAll();
+            } elseif (isset($_POST['filter_search']) == 'Category') {
+
+                $statement = $conn->prepare("SELECT * FROM annonce WHERE Categorie LIKE '{$searched_value}%'");
+                $statement->execute();
+                $announces = $statement->fetchAll();
+            } elseif (isset($_POST['filter_search']) == 'Type') {
+
+                $statement = $conn->prepare("SELECT * FROM annonce WHERE `Type` LIKE '{$searched_value}%'");
+                $statement->execute();
+                $announces = $statement->fetchAll();
+            } elseif (isset($_POST['filter_search']) == 'Price') {
+
+                $statement = $conn->prepare("SELECT * FROM annonce WHERE Prix LIKE '{$searched_value}%'");
+                $statement->execute();
+                $announces = $statement->fetchAll();
+            }
         } else {
-
             $statement = $conn->prepare("SELECT * FROM annonce");
             $statement->execute();
             $announces = $statement->fetchAll();
+        }
 
+        if ($announces == null) {
+            echo "<h3>Unfortunately, there are no matches for your search</h3>";
         }
 
         foreach ($announces as $announce) {
@@ -69,7 +98,7 @@
                 <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
                 <div class="card-body" data-id="<?php echo $announce['N_ann']; ?>">
                     <h5 class="card-title"><?php echo $announce['Title']; ?></h5>
-                    <p class="card-text"><?php echo $announce['Title']; ?></p>
+                    <!-- <p class="card-text">description</p> -->
                     <p class="card-text"><?php echo $announce['Categorie']; ?></p>
                     <p class="card-text"><?php echo $announce['Prix']; ?></p>
                     <a class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow" onclick="details()">Details</a>

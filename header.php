@@ -9,48 +9,20 @@
             </div>
 
             <div class="col-6">
-                <div class="input-group">
-                    <form method="POST">
-                        <div class="input-group">
-                            <input type="search" name="search" id="search" class="form-control" placeholder="Search">
-                            <select class="border" name="filter_search">
-                                <option>All</option>
-                                <option>City</option>
-                                <option>Category</option>
-                                <option>Type</option>
-                                <option>Price</option>
-                            </select>
-                            <button type="submit" class="btn searchbtn border" title="Search"><i class="fas fa-search filtersearch"></i></button>
-                        </div>
-                    </form>
-
-                    <!-- <form method="POST">
-                        <div class="input-group">
-                            <button type="submit" class="btn filterbtn border" title="Filter"><i class="fa-solid fa-filter filtersearch"></i></button>
-                        </div>
-                    </form> -->
-                </div>
+                <form method="POST">
+                    <div class="input-group">
+                        <input type="search" name="search" id="search" class="form-control" placeholder="Search">
+                        <select class="border" name="filter_search">
+                            <option value="All">All</option>
+                            <option value="City">City</option>
+                            <option value="Category">Category</option>
+                            <option value="Type">Type</option>
+                            <option value="Price">Price</option>
+                        </select>
+                        <button type="submit" class="btn searchbtn border" title="Search"><i class="fas fa-search filtersearch"></i></button>
+                    </div>
+                </form>
             </div>
-
-            <?php
-
-            if (isset($_POST['search']) or isset($_POST['filter_search'])) {
-
-                // $searched_value = $_POST['search'];
-                // echo "You searched for: $searched_value";
-
-                // $selectedOption = $_POST['filter_search'];
-                // echo "You filter for: $selectedOption's";
-
-                // $querySearch = "SELECT * FROM annonce WHERE Prix > 100";
-
-                // $searchStatement = $conn->prepare($querySearch);
-                // $searchStatement->execute();
-
-                // $announces = $searchStatement->fetchAll();
-            };
-
-            ?>
 
             <div class="col-3 d-flex justify-content-end gap-2">
                 <button class="btn signin"><span class="h6">SIGN IN</span></button>
