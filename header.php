@@ -36,18 +36,18 @@
 
             if (isset($_POST['search']) or isset($_POST['filter_search'])) {
 
-                $searched_value = $_POST['search'];
+                // $searched_value = $_POST['search'];
                 // echo "You searched for: $searched_value";
 
-                $selectedOption = $_POST['filter_search'];
+                // $selectedOption = $_POST['filter_search'];
                 // echo "You filter for: $selectedOption's";
 
-                $querySearch = "SELECT * FROM annonce WHERE Prix > 100";
+                // $querySearch = "SELECT * FROM annonce WHERE Prix > 100";
 
-                $searchStatement = $conn->prepare($querySearch);
-                $searchStatement->execute();
+                // $searchStatement = $conn->prepare($querySearch);
+                // $searchStatement->execute();
 
-                $announces = $searchStatement->fetchAll();
+                // $announces = $searchStatement->fetchAll();
             };
 
             ?>

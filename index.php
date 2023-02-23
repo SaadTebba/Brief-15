@@ -30,10 +30,10 @@
 
     <?php
 
-    if (isset($_POST['sortBy'])) {
-        $sort = $_POST['sortBy'];
-        echo "Selected option: $sort";
-    }
+    // if (isset($_POST['sortBy'])) {
+    //     $sort = $_POST['sortBy'];
+    //     echo "Selected option: $sort";
+    // }
 
     ?>
 
@@ -43,45 +43,50 @@
 
         <?php
 
-        // $statement = $conn->prepare("SELECT * FROM annonce");
-        // $statement->execute();
+        include_once('connection.php');
 
-        // $announces = $statement->fetchAll();
+        if (isset($_POST['search'])) {
 
-        // foreach ($announces as $announce) {
+            $searched_value = $_POST['search'];
 
-            include_once('connection.php');
-            $statement = $conn->prepare("SELECT * FROM annonce");
+            $statement = $conn->prepare("SELECT * FROM annonce WHERE Title = $searched_value"); //  OR Ville = $searched_value OR Categorie = $searched_value OR `Type` = $searched_value OR Prix = $searched_value
             $statement->execute();
-
             $announces = $statement->fetchAll();
 
-            foreach ($announces as $announce) {
+        } else {
+
+            $statement = $conn->prepare("SELECT * FROM annonce");
+            $statement->execute();
+            $announces = $statement->fetchAll();
+
+        }
+
+        foreach ($announces as $announce) {
 
         ?>
 
-                <div class="card d-inline-block m-1" style="width: 18rem;">
-                    <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
-                    <div class="card-body" data-id="<?php echo $announce['N_ann']; ?>">
-                        <h5 class="card-title"><?php echo $announce['Title']; ?></h5>
-                        <p class="card-text"><?php echo $announce['Title']; ?></p>
-                        <p class="card-text"><?php echo $announce['Categorie']; ?></p>
-                        <p class="card-text"><?php echo $announce['Prix']; ?></p>
-                        <a class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow" onclick="details()">Details</a>
-                    </div>
+            <div class="card d-inline-block m-1" style="width: 18rem;">
+                <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
+                <div class="card-body" data-id="<?php echo $announce['N_ann']; ?>">
+                    <h5 class="card-title"><?php echo $announce['Title']; ?></h5>
+                    <p class="card-text"><?php echo $announce['Title']; ?></p>
+                    <p class="card-text"><?php echo $announce['Categorie']; ?></p>
+                    <p class="card-text"><?php echo $announce['Prix']; ?></p>
+                    <a class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow" onclick="details()">Details</a>
                 </div>
+            </div>
 
         <?php
-            }
+        }
         ?>
 
     </div>
 
     <!-- ================================= Modal window ================================= -->
 
-    <?php 
-        // $query = "SELECT * FROM annonce WHERE N_ann LIKE"
-        // $statement = $conn->prepare();
+    <?php
+    // $query = "SELECT * FROM annonce WHERE N_ann LIKE"
+    // $statement = $conn->prepare();
     ?>
 
     <div class="modal modal-lg fade" id="ModalWindow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
