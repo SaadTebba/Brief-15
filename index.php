@@ -16,75 +16,13 @@
 
 <body>
 
-    <!-- ================================= Header (100vh) ================================= -->
-
-    <header class="p-3 bg-white">
-
-        <div class="row">
-
-            <div class="col-3">
-                <img src="logo.png" alt="logo" class="w-50">
-            </div>
-
-            <div class="col-6">
-
-                <form method="POST">
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input type="search" name="search" id="search" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn searchbtn border" title="Search"><i class="fas fa-search filtersearch"></i></button>
-                </form>
-
-                <form action="POST">
-                    <select class="border" name="filter_search">
-                        <option>All</option>
-                        <option>City</option>
-                        <option>Category</option>
-                        <option>Type</option>
-                        <option>Price</option>
-                    </select>
-                    <button type="submit" class="btn filterbtn border" title="Filter"><i class="fa-solid fa-filter filtersearch"></i></button>
-                </form>
-
-            </div>
-        </div>
-
-        <?php
-
-        if (isset($POST['search'])) {
-            $searchValue = $_POST['search'];
-            echo "You searched for: $searchValue";
-        };
-
-        if (isset($_POST['filter_search'])) {
-            $selectedOption = $_POST['filter_search'];
-            echo "You selected option: $selectedOption";
-        }
-
-        ?>
-
-        <div class="col-3 d-flex justify-content-end gap-2">
-            <button class="btn signin"><span class="h6">SIGN IN</span></button>
-            <button class="btn btn-primary signup"><span class="h6">SIGN UP</span></button>
-        </div>
-
-        </div>
-
-    </header>
-
-    <div id="image">
-        <h1 class="h1 text-center container pt-5 display-1 fw-normal">Buy, rent and sell your properties easily with us!</h1>
-    </div>
-
-    <div class="down-arrow" onclick="scrollDown()"></div>
-
     <!-- ================================= Cards container ================================= -->
 
+    <?php include 'header.php' ?>
 
     <form action="POST">
-        <select class="form-select btn sortingSelect" name="sortBy">
-            <option selected disabled>Sort by</option>
+        <select class="form-select btn sortingSelect" name="sortBy" id="sortBy">
+            <option selected disabled value="none">Sort by</option>
             <option value="pubDate">Publication date</option>
             <option value="price">Price</option>
         </select>
@@ -92,8 +30,10 @@
 
     <?php
 
+    if (isset($_POST['sortBy'])) {
         $sort = $_POST['sortBy'];
-        echo "You have choosed to sort by " . $sort;
+        echo "Selected option: $sort";
+    }
 
     ?>
 
@@ -102,34 +42,47 @@
     <div class="container p-5 text-center">
 
         <?php
-        include_once('connection.php');
-        $stmt = $conn->prepare("SELECT * FROM annonce");
-        $stmt->execute();
 
-        $users = $stmt->fetchAll();
+        // $statement = $conn->prepare("SELECT * FROM annonce");
+        // $statement->execute();
 
-        foreach ($users as $user) {
+        // $announces = $statement->fetchAll();
+
+        // foreach ($announces as $announce) {
+
+            include_once('connection.php');
+            $statement = $conn->prepare("SELECT * FROM annonce");
+            $statement->execute();
+
+            $announces = $statement->fetchAll();
+
+            foreach ($announces as $announce) {
+
         ?>
 
-            <div class="card d-inline-block m-1" style="width: 18rem;">
-                <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
-                <div class="card-body" data-id="<?php echo $user['N_ann']; ?>">
-                    <h5 class="card-title"><?php echo $user['Title']; ?></h5>
-                    <p class="card-text"><?php echo $user['Title']; ?></p>
-                    <p class="card-text"><?php echo $user['Categorie']; ?></p>
-                    <p class="card-text"><?php echo $user['Prix']; ?></p>
-                    <a class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow" onclick="details()">Details</a>
+                <div class="card d-inline-block m-1" style="width: 18rem;">
+                    <img src="announceimg.jfif" class="card-img-top" alt="announceImage">
+                    <div class="card-body" data-id="<?php echo $announce['N_ann']; ?>">
+                        <h5 class="card-title"><?php echo $announce['Title']; ?></h5>
+                        <p class="card-text"><?php echo $announce['Title']; ?></p>
+                        <p class="card-text"><?php echo $announce['Categorie']; ?></p>
+                        <p class="card-text"><?php echo $announce['Prix']; ?></p>
+                        <a class="btn detailsButton" data-bs-toggle="modal" data-bs-target="#ModalWindow" onclick="details()">Details</a>
+                    </div>
                 </div>
-            </div>
 
         <?php
-            // $specifyModal = "SELECT * FROM testingnissrine WHERE"
-        }
+            }
         ?>
 
     </div>
 
     <!-- ================================= Modal window ================================= -->
+
+    <?php 
+        // $query = "SELECT * FROM annonce WHERE N_ann LIKE"
+        // $statement = $conn->prepare();
+    ?>
 
     <div class="modal modal-lg fade" id="ModalWindow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -139,13 +92,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><span class="fw-bold">Title:</span> <?php echo $user['Title']; ?></p>
-                    <p><span class="fw-bold">Category:</span> <?php echo $user['Categorie']; ?></p>
-                    <p><span class="fw-bold">Type:</span> <?php echo $user['Type']; ?></p>
-                    <p><span class="fw-bold">Area:</span> <?php echo $user['Title']; ?></p>
-                    <p><span class="fw-bold">Adress:</span> <?php echo $user['Adresse']; ?></p>
-                    <p><span class="fw-bold">Price:</span> <?php echo $user['Prix']; ?></p>
-                    <p><span class="fw-bold">Description:</span> <?php echo $user['Title']; ?></p>
+                    <p><span class="fw-bold">Title:</span> <?php echo $announce['Title']; ?></p>
+                    <p><span class="fw-bold">Category:</span> <?php echo $announce['Categorie']; ?></p>
+                    <p><span class="fw-bold">Type:</span> <?php echo $announce['Type']; ?></p>
+                    <p><span class="fw-bold">Area:</span> <?php echo $announce['Title']; ?></p>
+                    <p><span class="fw-bold">Adress:</span> <?php echo $announce['Adresse']; ?></p>
+                    <p><span class="fw-bold">Price:</span> <?php echo $announce['Prix']; ?></p>
+                    <p><span class="fw-bold">Description:</span> <?php echo $announce['Title']; ?></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -154,28 +107,7 @@
         </div>
     </div>
 
-    <!-- ================================= Footer ================================= -->
-
-    <footer class="text-center text-black bg-white">
-
-        <div class="text-center text-dark p-3 footertext">
-            Contact us!
-        </div>
-
-        <div class="container pt-3">
-            <section class="mb-3">
-                <i class="fa-solid fa-envelope icons"></i>
-                <i class="fa-brands fa-instagram icons"></i>
-                <i class="fa-brands fa-twitter icons"></i>
-                <i class="fa-brands fa-facebook icons"></i>
-            </section>
-        </div>
-
-        <div class="text-center text-dark p-3 footertext">
-            © All right reserved. Solicode Tanger 2022/2023.
-        </div>
-
-    </footer>
+    <?php include 'footer.php' ?>
 
     <!-- ================================= Scripts ================================= -->
 

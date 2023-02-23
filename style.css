@@ -12,6 +12,10 @@ body {
     background-color: #EEF1F3;
 }
 
+/* header {
+    position: fixed;
+} */
+
 .searchbtn {
     border: #0089CD solid 1px;
 }
