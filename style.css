@@ -51,6 +51,9 @@ header .input-group {
 #search {
     border-radius: 50px 0px 0px 50px;
 }
+.profileimg {
+    width: 5%;
+}
 
 /* ================================= Scroll down arrow ================================= */
 
