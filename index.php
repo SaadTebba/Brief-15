@@ -20,25 +20,18 @@
 
     <?php include 'header.php' ?>
 
-    <form action="POST">
-        <select class="form-select btn sortingSelect" name="sort">
-            <option selected disabled value="none">Sort by</option>
-            <option value="Publication date">Publication date</option>
-            <option value="Price">Price</option>
-        </select>
+    <form method="POST">
+        <div class="input-group">
+            <select class="form-select btn sortingSelect" name="sort">
+                <option selected disabled value="none">Sort by</option>
+                <option value="Publication date">Publication date</option>
+                <option value="Price">Price</option>
+            </select>
+            <button class="btn sortingSelectBtn" type="submit" title="Sort"><i class="fa-solid fa-arrow-down-short-wide"></i></button>
+        </div>
     </form>
 
     <?php
-
-
-    if (isset($_POST['sort']) == 'Publication date') {
-        $sort = $_POST['sort'];
-        echo "Selected option: $sort";
-    } elseif (isset($_POST['sort']) == 'Price') {
-        echo "Selected option: $sort";
-    } elseif (isset($_POST['sort']) == 'none') {
-        echo "Selected option: $sort";
-    }
 
     ?>
 
@@ -88,6 +81,25 @@
 
         if ($announces == null) {
             echo "<h3>Unfortunately, there are no matches for your search</h3>";
+        }
+
+        if (isset($_POST['sort']) == 'Publication date') {
+
+            $sort = $_POST['sort'];
+
+            $statement = $conn->prepare("SELECT * FROM annonce ORDER BY D_pub ASC");
+            $statement->execute();
+            $announces = $statement->fetchAll();
+        } elseif (isset($_POST['sort']) == 'Price') {
+
+            $statement = $conn->prepare("SELECT * FROM annonce ORDER BY Prix ASC");
+            $statement->execute();
+            $announces = $statement->fetchAll();
+        } else {
+
+            $statement = $conn->prepare("SELECT * FROM annonce ORDER BY Title ASC");
+            $statement->execute();
+            $announces = $statement->fetchAll();
         }
 
         foreach ($announces as $announce) {

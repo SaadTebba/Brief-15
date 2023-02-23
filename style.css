@@ -12,10 +12,9 @@ body {
     background-color: #EEF1F3;
 }
 
-/* header {
-    position: fixed;
-} */
-
+header .input-group {
+    height: 48px;
+}
 .searchbtn {
     border: #0089CD solid 1px;
 }
@@ -99,11 +98,23 @@ body {
 .sortingSelect {
     background-color: #0091D9;
     color: white;
-    width: 15%;
     margin: 20px 0px 0px 148px;
 }
 
+.sortingSelectBtn {
+    border: #0089CD 1px solid;
+    border-radius: 0 10 1 50;
+    color: #0091D9;
+    margin: 20px 1000px 0px 0px;
+}
+
+.sortingSelectBtn:hover {
+    background-color: #0089CD;
+    color: white;
+}
+
 .sortingSelect:hover {
+    color: #0089CD;
     border: #0089CD solid 1px;
 }
 
