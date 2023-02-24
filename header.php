@@ -1,6 +1,6 @@
     <!-- ================================= Header (100vh) ================================= -->
 
-    <header class="p-3 bg-white">
+    <header class="p-3 bg-white" id="header">
 
         <div class="row">
 
@@ -33,8 +33,8 @@
 
     </header>
 
-    <div id="image">
-        <h1 class="h1 text-center container pt-5 display-1 fw-normal">Buy, rent and sell your properties easily with us!</h1>
+    <div id="image" class="d-flex align-items-center">
+        <h1 class="h1 text-center container pt-5 display-1 fw-bold">Buy, rent and sell your properties easily with us!</h1>
     </div>
 
     <div class="down-arrow" onclick="scrollDown()"></div>
