@@ -22,7 +22,7 @@
 
     <form method="POST">
         <div class="input-group">
-            <select class="form-select btn sortingSelect" name="sort">
+            <select class="form-select btn sortingSelect" name="sortSelect">
                 <option selected disabled value="none">Sort by</option>
                 <option value="Publication date">Publication date</option>
                 <option value="Price">Price</option>
@@ -46,27 +46,33 @@
                 $statement = $conn->prepare("SELECT * FROM annonce WHERE Title LIKE '{$searched_value}%' OR Ville LIKE '{$searched_value}%' OR Categorie LIKE '{$searched_value}%' OR `Type` LIKE '{$searched_value}%' OR Prix LIKE '{$searched_value}%'");
                 $statement->execute();
                 $announces = $statement->fetchAll();
-            } elseif (isset($_POST['filter_search']) == 'City') {
+
+            } elseif (isset($_POST['filter_search']) == 'Ville') {
 
                 $statement = $conn->prepare("SELECT * FROM annonce WHERE Ville LIKE '{$searched_value}%'");
                 $statement->execute();
                 $announces = $statement->fetchAll();
-            } elseif (isset($_POST['filter_search']) == 'Category') {
+
+            } elseif (isset($_POST['filter_search']) == 'Categorie') {
 
                 $statement = $conn->prepare("SELECT * FROM annonce WHERE Categorie LIKE '{$searched_value}%'");
                 $statement->execute();
                 $announces = $statement->fetchAll();
+
             } elseif (isset($_POST['filter_search']) == 'Type') {
 
                 $statement = $conn->prepare("SELECT * FROM annonce WHERE `Type` LIKE '{$searched_value}%'");
                 $statement->execute();
                 $announces = $statement->fetchAll();
-            } elseif (isset($_POST['filter_search']) == 'Price') {
+
+            } elseif (isset($_POST['filter_search']) == 'Prix') {
 
                 $statement = $conn->prepare("SELECT * FROM annonce WHERE Prix LIKE '{$searched_value}%'");
                 $statement->execute();
                 $announces = $statement->fetchAll();
+
             }
+
         } else {
             $statement = $conn->prepare("SELECT * FROM annonce");
             $statement->execute();
@@ -77,19 +83,21 @@
             echo "<h3>Unfortunately, there are no matches for your search</h3>";
         }
 
-        if (isset($_POST['sort']) == 'Publication date') {
+        if (isset($_POST['sortSelect']) == 'Publication date') {
 
-            $sort = $_POST['sort'];
+            $sort = $_POST['sortSelect'];
 
             $statement = $conn->prepare("SELECT * FROM annonce ORDER BY D_pub ASC");
             $statement->execute();
             $announces = $statement->fetchAll();
-        } elseif (isset($_POST['sort']) == 'Price') {
+
+        } elseif (isset($_POST['sortSelect']) == 'Price') {
 
             $statement = $conn->prepare("SELECT * FROM annonce ORDER BY Prix ASC");
             $statement->execute();
             $announces = $statement->fetchAll();
-        } elseif (isset($_POST['sort']) == 'none') {
+
+        } elseif (isset($_POST['sortSelect']) == 'none') {
 
             $statement = $conn->prepare("SELECT * FROM annonce ORDER BY Title ASC");
             $statement->execute();

@@ -5,7 +5,7 @@
         <div class="row">
 
             <div class="col-3">
-                <img src="logo.png" alt="logo" class="w-50">
+                <a href="index.php"><img src="logo.png" alt="logo" class="w-50"></a>
             </div>
 
             <div class="col-6">
