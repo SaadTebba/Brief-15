@@ -8,10 +8,10 @@
 
         <div class="container pt-3">
             <section class="mb-3">
-                <i class="fa-solid fa-envelope icons"></i>
-                <i class="fa-brands fa-instagram icons"></i>
-                <i class="fa-brands fa-twitter icons"></i>
-                <i class="fa-brands fa-facebook icons"></i>
+                <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><i class="fa-solid fa-envelope icons"></i></a>
+                <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram icons"></i></a>
+                <a href="https://twitter.com/?lang=en" target="_blank"><i class="fa-brands fa-twitter icons"></i></a>
+                <a href="https://web.facebook.com" target="_blank"><i class="fa-brands fa-facebook icons"></i></a>
             </section>
         </div>
 

@@ -16,9 +16,6 @@ header .input-group {
     height: 48px;
 }
 
-#header {
-    position: fixed;
-}
 .searchbtn {
     border: #0089CD solid 1px;
 }
