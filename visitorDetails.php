@@ -68,10 +68,32 @@
     $statement->execute();
     $announces = $statement->fetchAll();
     foreach ($announces as $announce) {
+
+        $statement = $conn->prepare("   SELECT N_tele
+                                        FROM client
+                                        JOIN annonce
+                                        ON client.N_cl = annonce.N_cl   
+                                        WHERE N_ann = $id");
+        $statement->execute();
+        $phoneNumber = $statement->fetch();
+
+        $statement = $conn->prepare("   SELECT Img_url
+                                        FROM galerie_images
+                                        JOIN annonce
+                                        ON galerie_images.N_ann = annonce.N_ann
+                                        WHERE annonce.N_ann = $id");
+        $statement->execute();
+        $pictures = $statement->fetchAll();
+
+        echo "<pre>";
+        print_r($pictures);
+        echo "</pre>";
+
     ?>
 
         <div class="container p-5">
             <div class="row">
+
                 <div class="col">
                     <p><span class="fw-bold">Title:</span> <?php echo $announce['Title']; ?></p>
                     <p><span class="fw-bold">Category:</span> <?php echo $announce['Categorie']; ?></p>
@@ -79,37 +101,32 @@
                     <p><span class="fw-bold">Area:</span> <?php echo $announce['Title']; ?></p>
                     <p><span class="fw-bold">Adress:</span> <?php echo $announce['Adresse']; ?></p>
                     <p><span class="fw-bold">Price:</span> <?php echo $announce['Prix']; ?></p>
-                    <p><span class="fw-bold">Description:</span> <?php echo $announce['Title']; ?></p>
-                    <p><span class="fw-bold">Contact owner:</span> <?php echo $announce['Title']; ?></p>
+                    <p><span class="fw-bold">Description:</span> No description</p>
+                    <p><span class="fw-bold">Contact owner:</span> <?php echo $phoneNumber[0]; ?></p>
                 </div>
+
                 <div class="col">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+                            <img src="https://thumbs.dreamstime.com/z/medina-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-50530429.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Wintry Mountain Landscape" />
                         </div>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://cdn.pixabay.com/photo/2014/11/13/06/12/boy-529067_960_720.jpg" class="d-block w-100" alt="image">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://cdn.pixabay.com/photo/2016/02/28/12/55/boy-1226964_960_720.jpg" class="d-block w-100" alt="image">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://cdn.pixabay.com/photo/2013/01/29/01/02/google-76522_960_720.png" class="d-block w-100" alt="image">
-                            </div>
+
+                        <div class="col-lg-4 mb-4 mb-lg-0">
+                            <img src="https://thumbs.dreamstime.com/z/medina-s-architecture-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-same-name-54375221.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Mountains in the Clouds" />
+
+                            <img src="https://thumbs.dreamstime.com/z/medina-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-same-name-noted-54328394.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+
+                        <div class="col-lg-4 mb-4 mb-lg-0">
+                            <img src="https://thumbs.dreamstime.com/z/chefchaouen-morocco-beautiful-blue-medina-34474818.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Waves at Sea" />
+
+                            <img src="https://thumbs.dreamstime.com/z/gate-house-medina-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-same-name-54374879.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Yosemite National Park" />
+                        </div>
                     </div>
+
                 </div>
+
             </div>
         </div>
 
