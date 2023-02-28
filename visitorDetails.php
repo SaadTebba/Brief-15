@@ -77,18 +77,6 @@
         $statement->execute();
         $phoneNumber = $statement->fetch();
 
-        $statement = $conn->prepare("   SELECT Img_url
-                                        FROM galerie_images
-                                        JOIN annonce
-                                        ON galerie_images.N_ann = annonce.N_ann
-                                        WHERE annonce.N_ann = $id");
-        $statement->execute();
-        $pictures = $statement->fetchAll();
-
-        echo "<pre>";
-        print_r($pictures);
-        echo "</pre>";
-
     ?>
 
         <div class="container p-5">
@@ -107,30 +95,33 @@
 
                 <div class="col">
 
+
                     <div class="row">
-                        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                            <img src="https://thumbs.dreamstime.com/z/medina-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-50530429.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Wintry Mountain Landscape" />
-                        </div>
+                        <?php
+                        $statement = $conn->prepare("   SELECT Img_url
+                        FROM galerie_images
+                        JOIN annonce
+                        ON galerie_images.N_ann = annonce.N_ann
+                        WHERE annonce.N_ann = $id");
+                        $statement->execute();
+                        $pictures = $statement->fetchAll();
 
-                        <div class="col-lg-4 mb-4 mb-lg-0">
-                            <img src="https://thumbs.dreamstime.com/z/medina-s-architecture-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-same-name-54375221.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Mountains in the Clouds" />
+                        foreach ($pictures as $picture) {
+                        ?>
 
-                            <img src="https://thumbs.dreamstime.com/z/medina-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-same-name-noted-54328394.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
-                        </div>
+                            <div class="col-lg-4 mb-4 mb-lg-0">
+                                <img src="<?php echo $picture[0]; ?>" class="w-100 shadow-1-strong rounded mb-4" alt="Image 1">
+                            </div>
 
-                        <div class="col-lg-4 mb-4 mb-lg-0">
-                            <img src="https://thumbs.dreamstime.com/z/chefchaouen-morocco-beautiful-blue-medina-34474818.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Waves at Sea" />
-
-                            <img src="https://thumbs.dreamstime.com/z/gate-house-medina-chefchaouen-morocco-chaouen-city-northwest-chief-town-province-same-name-54374879.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Yosemite National Park" />
-                        </div>
+                        <?php } ?>
                     </div>
-
                 </div>
 
             </div>
         </div>
 
-    <?php }
+    <?php
+    }
     include 'footer.php' ?>
 
     <!-- ================================= Scripts ================================= -->
